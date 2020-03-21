@@ -1,0 +1,13 @@
+import java.net.*;
+import java.io.*;
+import java.util.Scanner;
+
+
+public class client {
+	public static void main(String[] args) throws IOException {
+		Scanner scanner=new Scanner(System.in);
+		String ip = scanner.nextLine();
+		Socket s = new Socket(ip, 4999);
+		System.out.println("klient");
+	}
+}
