@@ -2,7 +2,7 @@ import java.net.*;
 import java.io.*;
 import java.net.InetAddress;
 
-public class server {
+public class Serwer {
 	public static void main(String[] args) throws IOException {
 		InetAddress ip= InetAddress.getLocalHost();
 		System.out.println(ip);
