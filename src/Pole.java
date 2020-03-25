@@ -1,13 +1,26 @@
-import javax.swing.ImageIcon;
-import java.awt.Graphics;
 
-public class Pole extends ImageIcon
-{
+public class Pole {
 	private char kolor;
 	private char pionek;
 	
-	Pole(String image) {
-	    super(image);
+	public Pole() {
+	    
 	}
-
+	
+	public void setPionek(char pionek) {
+		this.pionek=pionek;
+	}
+	
+	public void setKolor(char kolor) {
+		this.kolor=kolor;
+	}
+	
+	public char getKolor() {
+		return kolor;
+	}
+	
+	public char getPionek() {
+		return pionek;
+	}
+	
 }

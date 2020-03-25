@@ -8,7 +8,7 @@ public class Okno extends JFrame{
 			setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			setVisible(true);
 			setResizable(false);
-			setSize(800, 800);
+			setSize(816, 839);
 			
 			JPanel panel=new Panel();
 			add(panel);
