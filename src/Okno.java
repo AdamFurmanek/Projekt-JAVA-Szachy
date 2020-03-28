@@ -10,7 +10,7 @@ public class Okno extends JFrame{
 			setResizable(false);
 			setSize(816, 839);
 			
-			JPanel panel=new Panel();
+			JPanel panel = new Panel();
 			add(panel);
 			//pack();
 
