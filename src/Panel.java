@@ -121,12 +121,17 @@ public class Panel extends JPanel implements MouseListener{
 		myszX2=e.getX()/100;
 		myszY2=e.getY()/100;
 		System.out.println(myszX2 + " " + myszY2);
+<<<<<<< HEAD
 		if(Klient.gracz==Klient.tura) {
+=======
+		if(true) {
+>>>>>>> 810af2d7a8a94df399a22b1c0bb3a547ef11f91f
 			szachownica[myszX2][myszY2].setKolor(szachownica[myszX1][myszY1].getKolor());
 			szachownica[myszX2][myszY2].setPionek(szachownica[myszX1][myszY1].getPionek());
 			szachownica[myszX1][myszY1].setKolor('n');
 			szachownica[myszX1][myszY1].setPionek('n');
 			repaint();
+<<<<<<< HEAD
 			Klient.myszX1=myszX1;
 			Klient.myszY1=myszY1;
 			Klient.myszX2=myszX2;
@@ -146,4 +151,8 @@ public class Panel extends JPanel implements MouseListener{
 		szachownica[Klient.myszX1][Klient.myszY1].setKolor('n');
 		szachownica[Klient.myszX1][Klient.myszY1].setPionek('n');
 	}
+=======
+		}
+	}
+>>>>>>> 810af2d7a8a94df399a22b1c0bb3a547ef11f91f
 }
