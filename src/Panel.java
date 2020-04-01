@@ -90,10 +90,18 @@ public class Panel extends JPanel implements MouseListener{
 				szachownica[i][j].setPionek(rozstawienie[j][i]);
 				szachownica[i][j].setKolor('n');
 			}
-			szachownica[i][0].setKolor('b');
-			szachownica[i][1].setKolor('b');
-			szachownica[i][6].setKolor('c');
-			szachownica[i][7].setKolor('c');
+			if(Klient.gracz=='c') {
+				szachownica[i][0].setKolor('b');
+				szachownica[i][1].setKolor('b');
+				szachownica[i][6].setKolor('c');
+				szachownica[i][7].setKolor('c');
+			}
+			if(Klient.gracz=='b') {
+				szachownica[i][0].setKolor('c');
+				szachownica[i][1].setKolor('c');
+				szachownica[i][6].setKolor('b');
+				szachownica[i][7].setKolor('b');
+			}
 		}
 	}
 
@@ -121,28 +129,49 @@ public class Panel extends JPanel implements MouseListener{
 		myszX2=e.getX()/100;
 		myszY2=e.getY()/100;
 		System.out.println(myszX2 + " " + myszY2);
-<<<<<<< HEAD
-		if(Klient.gracz==Klient.tura) {
-=======
-		if(true) {
->>>>>>> 810af2d7a8a94df399a22b1c0bb3a547ef11f91f
+		if(sprawdzenieRuchu()) {
 			szachownica[myszX2][myszY2].setKolor(szachownica[myszX1][myszY1].getKolor());
 			szachownica[myszX2][myszY2].setPionek(szachownica[myszX1][myszY1].getPionek());
 			szachownica[myszX1][myszY1].setKolor('n');
 			szachownica[myszX1][myszY1].setPionek('n');
 			repaint();
-<<<<<<< HEAD
 			Klient.myszX1=myszX1;
 			Klient.myszY1=myszY1;
 			Klient.myszX2=myszX2;
 			Klient.myszY2=myszY2;
 			Klient.wysylka=1;
+			
 			if(Klient.tura=='b')
 				Klient.tura='c';
 			else if(Klient.tura=='c')
 				Klient.tura='b';	
+			
 
 		}
+	}
+	
+	public boolean sprawdzenieRuchu() {
+		if(Klient.gracz==Klient.tura) { //czy tura wlasciwa? tak:
+			if(szachownica[myszX1][myszY1].getKolor()==Klient.gracz) { //czy kolor pionka wlasciwy? tak:
+				if(szachownica[myszX1][myszY1].getPionek()=='p') { //piony:
+					if((myszY1==6)&&(myszY2==4)&&(myszX1==myszX2)&&(szachownica[myszX1][5].getKolor()=='n')&&(szachownica[myszX1][4].getKolor()=='n')) //pierwszy ruch od dwa pola
+						return true;
+					else if((myszY2==myszY1-1)&&(myszX1==myszX2)&&(szachownica[myszX2][myszY2].getKolor()=='n'))
+						return true;
+					else if((myszY2==myszY1-1)&&((myszX2==myszX1-1)||(myszX2==myszX1+1))&&(szachownica[myszX2][myszY2].getKolor()!='n')&&(szachownica[myszX2][myszY2].getKolor()!=Klient.gracz))
+						return true;
+					else
+						return false;
+				}
+				else
+					return true;
+
+			} //czy kolor pionka wlasciwy? nie:
+			else
+				return false;
+		}
+		else //czy tura wlasciwa? nie:
+			return false;
 	}
 	
 	public void zmiana(){
@@ -151,8 +180,4 @@ public class Panel extends JPanel implements MouseListener{
 		szachownica[Klient.myszX1][Klient.myszY1].setKolor('n');
 		szachownica[Klient.myszX1][Klient.myszY1].setPionek('n');
 	}
-=======
-		}
-	}
->>>>>>> 810af2d7a8a94df399a22b1c0bb3a547ef11f91f
 }

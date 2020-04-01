@@ -43,6 +43,21 @@ public class Klient {
 				myszY1=((int)wspolrzedne.charAt(1))-48;
 				myszX2=((int)wspolrzedne.charAt(2))-48;
 				myszY2=((int)wspolrzedne.charAt(3))-48;
+				
+				int i, j;
+				for(i=0,j=7;i<8;i++,j--) {
+					if (myszY1==i) {
+						myszY1=j;
+						break;
+					}
+				}
+				for(i=0,j=7;i<8;i++,j--) {
+					if(myszY2==i) {
+						myszY2=j;
+						break;
+					}
+				} //odwrocenie planszy
+				
 				Okno.panel.zmiana();
 				Okno.panel.repaint();
 				
@@ -58,6 +73,7 @@ public class Klient {
 				wysylka=0;
 			}
 		}
+		
 
 		
 	}
