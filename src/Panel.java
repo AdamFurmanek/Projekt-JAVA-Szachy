@@ -70,7 +70,7 @@ public class Panel extends JPanel implements MouseListener{
 	
 	public void inicjuj(){
 		//zmienna pionek:
-		//k - król, h - hetman, w - wie¿a, g - gonie, s - skoczek, p - pion, n - nic
+		//k - król, h - hetman, w - wie¿a, g - goniec, s - skoczek, p - pion, n - nic
 		//zmienna kolor:
 		//b - bialy, c - czarny, n - nic
 		char[][] rozstawienie = 
@@ -151,27 +151,229 @@ public class Panel extends JPanel implements MouseListener{
 	}
 	
 	public boolean sprawdzenieRuchu() {
-		if(Klient.gracz==Klient.tura) { //czy tura wlasciwa? tak:
-			if(szachownica[myszX1][myszY1].getKolor()==Klient.gracz) { //czy kolor pionka wlasciwy? tak:
-				if(szachownica[myszX1][myszY1].getPionek()=='p') { //piony:
-					if((myszY1==6)&&(myszY2==4)&&(myszX1==myszX2)&&(szachownica[myszX1][5].getKolor()=='n')&&(szachownica[myszX1][4].getKolor()=='n')) //pierwszy ruch od dwa pola
-						return true;
-					else if((myszY2==myszY1-1)&&(myszX1==myszX2)&&(szachownica[myszX2][myszY2].getKolor()=='n'))
-						return true;
-					else if((myszY2==myszY1-1)&&((myszX2==myszX1-1)||(myszX2==myszX1+1))&&(szachownica[myszX2][myszY2].getKolor()!='n')&&(szachownica[myszX2][myszY2].getKolor()!=Klient.gracz))
-						return true;
+ //czy tura wlasciwa? czy wybrano inne miejsce? czy nie stajesz na wlasnym pionku? czy kolor pionka wlasciwy?
+			if((Klient.gracz==Klient.tura)&&(szachownica[myszX1][myszY1].getKolor()==Klient.gracz)&&(myszX1!=myszX2||myszY1!=myszY2)&&(szachownica[myszX2][myszY2].getKolor()!=Klient.gracz)) {
+					if(szachownica[myszX1][myszY1].getPionek()=='p') { //pion:
+						if((myszY1==6)&&(myszY2==4)&&(myszX1==myszX2)&&(szachownica[myszX1][5].getKolor()=='n')&&(szachownica[myszX1][4].getKolor()=='n')) //pierwszy ruch od dwa pola
+							return true;
+						else if((myszY2==myszY1-1)&&(myszX1==myszX2)&&(szachownica[myszX2][myszY2].getKolor()=='n'))
+							return true;
+						else if((myszY2==myszY1-1)&&((myszX2==myszX1-1)||(myszX2==myszX1+1))&&(szachownica[myszX2][myszY2].getKolor()!='n')&&(szachownica[myszX2][myszY2].getKolor()!=Klient.gracz))
+							return true;
+						else
+							return false;
+					}
+					else if(szachownica[myszX1][myszY1].getPionek()=='w') { //wieza:
+						if((myszX1==myszX2)) { //poruszanie w pionie
+							if(myszY2>myszY1) { //ruch w dol
+								int i=myszY1+1;
+										while(i!=myszY2) {
+											if(szachownica[myszX2][i].getKolor()!='n')
+												return false;
+											i++;
+										}
+								return true;
+							}
+							else { //ruch w gore
+								int i=myszY2+1;
+										while(i!=myszY1) {
+											if(szachownica[myszX2][i].getKolor()!='n')
+												return false;
+											i++;
+										}
+								return true;
+							}
+						}
+						else if ((myszY1==myszY2)) { //poruszanie w poziomie
+							if(myszX2>myszX1) {
+								int i=myszX1+1;
+										while(i!=myszX2) {
+											if(szachownica[i][myszY2].getKolor()!='n')
+												return false;
+											i++;
+										}
+								return true;
+							}
+							else {
+								int i=myszX2+1;
+										while(i!=myszX1) {
+											if(szachownica[i][myszY2].getKolor()!='n')
+												return false;
+											i++;
+										}
+								return true;
+							}
+						}
+						else
+							return false;
+					}
+					else if(szachownica[myszX1][myszY1].getPionek()=='g') { //goniec
+						if(myszX2-myszX1==myszY2-myszY1||myszX2-myszX1==-(myszY2-myszY1)) {
+							if(myszX2>myszX1) { //prawo-gora lub prawo-dol
+								if(myszY2>myszY1) { //prawo-dol
+									int i = myszX1+1;
+									int j = myszY1+1;
+									while(i!=myszX2) {
+										if(szachownica[i][j].getKolor()!='n')
+											return false;
+										i++;
+										j++;
+									}
+									return true;
+								}
+								else {//prawo-gora
+									int i = myszX1+1;
+									int j = myszY1-1;
+									while(i!=myszX2) {
+										if(szachownica[i][j].getKolor()!='n')
+											return false;
+										i++;
+										j--;
+									}
+									return true;
+								}
+							}
+							else { //lewo-gora lub lewo-dol
+								if(myszY2>myszY1) { //prawo-dol
+									int i = myszX1-1;
+									int j = myszY1+1;
+									while(i!=myszX2) {
+										if(szachownica[i][j].getKolor()!='n')
+											return false;
+										i--;
+										j++;
+									}
+									return true;
+								}
+								else {//prawo-gora
+									int i = myszX1-1;
+									int j = myszY1-1;
+									while(i!=myszX2) {
+										if(szachownica[i][j].getKolor()!='n')
+											return false;
+										i--;
+										j--;
+									}
+									return true;
+								}
+							}
+						}
+
+						else
+							return false;
+					}
+					else if(szachownica[myszX1][myszY1].getPionek()=='h') {
+						if(myszX2-myszX1==myszY2-myszY1||myszX2-myszX1==-(myszY2-myszY1)) {
+							if(myszX2>myszX1) { //prawo-gora lub prawo-dol
+								if(myszY2>myszY1) { //prawo-dol
+									int i = myszX1+1;
+									int j = myszY1+1;
+									while(i!=myszX2) {
+										if(szachownica[i][j].getKolor()!='n')
+											return false;
+										i++;
+										j++;
+									}
+									return true;
+								}
+								else {//prawo-gora
+									int i = myszX1+1;
+									int j = myszY1-1;
+									while(i!=myszX2) {
+										if(szachownica[i][j].getKolor()!='n')
+											return false;
+										i++;
+										j--;
+									}
+									return true;
+								}
+							}
+							else { //lewo-gora lub lewo-dol
+								if(myszY2>myszY1) { //prawo-dol
+									int i = myszX1-1;
+									int j = myszY1+1;
+									while(i!=myszX2) {
+										if(szachownica[i][j].getKolor()!='n')
+											return false;
+										i--;
+										j++;
+									}
+									return true;
+								}
+								else {//prawo-gora
+									int i = myszX1-1;
+									int j = myszY1-1;
+									while(i!=myszX2) {
+										if(szachownica[i][j].getKolor()!='n')
+											return false;
+										i--;
+										j--;
+									}
+									return true;
+								}
+							}
+						}
+						else if((myszX1==myszX2)) { //poruszanie w pionie
+							if(myszY2>myszY1) { //ruch w dol
+								int i=myszY1+1;
+										while(i!=myszY2) {
+											if(szachownica[myszX2][i].getKolor()!='n')
+												return false;
+											i++;
+										}
+								return true;
+							}
+							else { //ruch w gore
+								int i=myszY2+1;
+										while(i!=myszY1) {
+											if(szachownica[myszX2][i].getKolor()!='n')
+												return false;
+											i++;
+										}
+								return true;
+							}
+						}
+						else if ((myszY1==myszY2)) { //poruszanie w poziomie
+							if(myszX2>myszX1) {
+								int i=myszX1+1;
+										while(i!=myszX2) {
+											if(szachownica[i][myszY2].getKolor()!='n')
+												return false;
+											i++;
+										}
+								return true;
+							}
+							else {
+								int i=myszX2+1;
+										while(i!=myszX1) {
+											if(szachownica[i][myszY2].getKolor()!='n')
+												return false;
+											i++;
+										}
+								return true;
+							}
+						}
+
+						else
+							return false;
+					}
+					else if(szachownica[myszX1][myszY1].getPionek()=='s') {
+						if(((myszX2-myszX1==-1||myszX2-myszX1==1)&&(myszY2-myszY1==-2||myszY2-myszY1==2))||((myszX2-myszX1==-2||myszX2-myszX1==2)&&(myszY2-myszY1==-1||myszY2-myszY1==1)))
+							return true;
+						else
+							return false;
+					}
+					else if(szachownica[myszX1][myszY1].getPionek()=='k') {
+						if((myszX2-myszX1>=-1)&&(myszX2-myszX1<=1)&&(myszY2-myszY1>=-1)&&(myszY2-myszY1<=1))
+							return true;
+						else
+							return false;
+					}
 					else
-						return false;
+						return true;
 				}
 				else
-					return true;
-
-			} //czy kolor pionka wlasciwy? nie:
-			else
-				return false;
-		}
-		else //czy tura wlasciwa? nie:
-			return false;
+					return false;
 	}
 	
 	public void zmiana(){
