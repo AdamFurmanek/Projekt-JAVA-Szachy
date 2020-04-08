@@ -134,6 +134,9 @@ public class Panel extends JPanel implements MouseListener{
 			szachownica[myszX2][myszY2].setPionek(szachownica[myszX1][myszY1].getPionek());
 			szachownica[myszX1][myszY1].setKolor('n');
 			szachownica[myszX1][myszY1].setPionek('n');
+			wygrana();
+			premia();
+				
 			repaint();
 			Klient.myszX1=myszX1;
 			Klient.myszY1=myszY1;
@@ -366,6 +369,20 @@ public class Panel extends JPanel implements MouseListener{
 					else if(szachownica[myszX1][myszY1].getPionek()=='k') {
 						if((myszX2-myszX1>=-1)&&(myszX2-myszX1<=1)&&(myszY2-myszY1>=-1)&&(myszY2-myszY1<=1))
 							return true;
+						else if(myszX1==4&&myszY1==7&&myszX2==2&&myszY2==7&&szachownica[0][7].getPionek()=='w'&&szachownica[0][7].getKolor()==Klient.gracz&&szachownica[1][7].getKolor()=='n'&&szachownica[2][7].getKolor()=='n'&&szachownica[3][7].getPionek()=='n') {
+							szachownica[0][7].setPionek('n');
+							szachownica[0][7].setKolor('n');
+							szachownica[3][7].setPionek('w');
+							szachownica[3][7].setKolor(Klient.gracz);
+							return true;
+						}
+						else if(myszX1==4&&myszY1==7&&myszX2==6&&myszY2==7&&szachownica[5][7].getKolor()=='n'&&szachownica[6][7].getKolor()=='n'&&szachownica[7][7].getPionek()=='w'&&szachownica[7][7].getKolor()==Klient.gracz) {
+							szachownica[7][7].setPionek('n');
+							szachownica[7][7].setKolor('n');
+							szachownica[5][7].setPionek('w');
+							szachownica[5][7].setKolor(Klient.gracz);
+							return true;
+						}
 						else
 							return false;
 					}
@@ -377,9 +394,51 @@ public class Panel extends JPanel implements MouseListener{
 	}
 	
 	public void zmiana(){
+		if(Klient.myszX1==4&&Klient.myszY1==0&&Klient.myszX2==2&&Klient.myszY2==0&&szachownica[0][0].getPionek()=='w'&&szachownica[0][0].getKolor()!=Klient.gracz&&szachownica[1][0].getKolor()=='n'&&szachownica[2][0].getKolor()=='n'&&szachownica[3][0].getPionek()=='n') {
+			szachownica[0][0].setPionek('n');
+			szachownica[0][0].setKolor('n');
+			szachownica[3][0].setPionek('w');
+			if(Klient.gracz=='b')
+				szachownica[3][0].setKolor('c');
+			else
+				szachownica[3][0].setKolor('b');
+		}
+		if(Klient.myszX1==4&&Klient.myszY1==0&&Klient.myszX2==6&&Klient.myszY2==0&&szachownica[5][0].getKolor()=='n'&&szachownica[6][0].getKolor()=='n'&&szachownica[7][0].getPionek()=='w'&&szachownica[7][0].getKolor()!=Klient.gracz) {
+			szachownica[7][0].setPionek('n');
+			szachownica[7][0].setKolor('n');
+			szachownica[5][0].setPionek('w');
+			if(Klient.gracz=='b')
+				szachownica[5][0].setKolor('c');
+			else
+				szachownica[5][0].setKolor('b');
+		}
+			
 		szachownica[Klient.myszX2][Klient.myszY2].setKolor(szachownica[Klient.myszX1][Klient.myszY1].getKolor());
 		szachownica[Klient.myszX2][Klient.myszY2].setPionek(szachownica[Klient.myszX1][Klient.myszY1].getPionek());
 		szachownica[Klient.myszX1][Klient.myszY1].setKolor('n');
 		szachownica[Klient.myszX1][Klient.myszY1].setPionek('n');
+		wygrana();
+		premia();
+	}
+	
+	public void wygrana() {
+		int k=0;
+		for(int i=0;i<8;i++) {
+			for(int j=0;j<8;j++) {
+				if(szachownica[i][j].getPionek()=='k')
+					k++;
+			}
+		}
+		if(k!=2) {
+			inicjuj();
+		}
+	}
+	public void premia() {
+		for(int i=0;i<8;i++) {
+			if(szachownica[i][0].getPionek()=='p')
+				szachownica[i][0].setPionek('h');
+			if(szachownica[i][7].getPionek()=='p')
+				szachownica[i][7].setPionek('h');
+		}
 	}
 }
