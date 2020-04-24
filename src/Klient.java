@@ -3,24 +3,32 @@ import java.awt.EventQueue;
 import java.io.*;
 import java.util.Scanner;
 
+import javax.swing.JOptionPane;
+
 public class Klient {
 	
 	public static char tura='b';
 	public static char gracz;
 	public static int wysylka = 0;
 	public static int myszX1, myszY1, myszX2, myszY2;
+	public static Socket s;
+	public static BufferedReader bf;
 	
 	public static void main(String[] args) throws IOException {
-		Scanner scanner=new Scanner(System.in);
-		String ip ="localhost";
-		//String ip = scanner.nextLine();
-		Socket s = new Socket(ip, 4999);
+
+		String ip = (String)JOptionPane.showInputDialog(null,"Podaj IP serwera", "IP serwera", JOptionPane.INFORMATION_MESSAGE, null, null, "localhost");
+		if(ip==null)
+			System.exit(0);
 		
-		InputStreamReader in = new InputStreamReader(s.getInputStream());
-		BufferedReader bf = new BufferedReader(in);
+		try {
+		s = new Socket(ip, 4999);
+		bf = new BufferedReader(new InputStreamReader(s.getInputStream()));
 		gracz=(char)bf.read();
-		
-		System.out.println("klient " + gracz);
+		}
+		catch(IOException e){
+			JOptionPane.showConfirmDialog(null,"Nie mo¿na po³¹czyæ z serwerem o podanym IP.", "Brak po³¹czenia", JOptionPane.DEFAULT_OPTION);
+			System.exit(0);
+		}
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -38,7 +46,12 @@ public class Klient {
 			else if(tura!=gracz&&wysylka==0) {
 				
 				wspolrzedne=bf.readLine();
-
+				
+				if(wspolrzedne.charAt(0)=='x') {
+					JOptionPane.showConfirmDialog(null,"Przeciwnik siê roz³¹czy³.", "Koniec gry", JOptionPane.DEFAULT_OPTION);
+					System.exit(0);
+				}
+				
 				myszX1=((int)wspolrzedne.charAt(0))-48;
 				myszY1=((int)wspolrzedne.charAt(1))-48;
 				myszX2=((int)wspolrzedne.charAt(2))-48;
@@ -73,8 +86,5 @@ public class Klient {
 				wysylka=0;
 			}
 		}
-		
-
-		
 	}
 }

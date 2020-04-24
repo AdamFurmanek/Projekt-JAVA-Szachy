@@ -1,5 +1,8 @@
 import javax.swing.JPanel;
+
 import javax.swing.ImageIcon;
+
+import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -14,6 +17,8 @@ public class Panel extends JPanel implements MouseListener{
 	public Panel() {
 		addMouseListener(this);
 		inicjuj();
+		if(Klient.tura!=Klient.gracz)
+			setCursor(new Cursor(Cursor.WAIT_CURSOR));
 	}
 
 	public void paint(Graphics g)
@@ -24,43 +29,43 @@ public class Panel extends JPanel implements MouseListener{
 			for(j=0;j<8;j++) {
 				
 				if((i+j)%2==0) {
-					pole_szachownicy = new ImageIcon("src/pole-p.png");
+					pole_szachownicy = new ImageIcon("png/pole-p.png");
 					pole_szachownicy.paintIcon(this, g, i*100, j*100);
 				}
 				else {
-					pole_szachownicy = new ImageIcon("src/pole-z.png");
+					pole_szachownicy = new ImageIcon("png/pole-z.png");
 					pole_szachownicy.paintIcon(this, g, i*100, j*100);
 				}
 				
 				if(szachownica[i][j].getKolor()=='b') {
 					if(szachownica[i][j].getPionek()=='k')
-						pole_szachownicy = new ImageIcon("src/k-b.png");
+						pole_szachownicy = new ImageIcon("png/k-b.png");
 					if(szachownica[i][j].getPionek()=='h')
-						pole_szachownicy = new ImageIcon("src/h-b.png");
+						pole_szachownicy = new ImageIcon("png/h-b.png");
 					if(szachownica[i][j].getPionek()=='w')
-						pole_szachownicy = new ImageIcon("src/w-b.png");
+						pole_szachownicy = new ImageIcon("png/w-b.png");
 					if(szachownica[i][j].getPionek()=='g')
-						pole_szachownicy = new ImageIcon("src/g-b.png");
+						pole_szachownicy = new ImageIcon("png/g-b.png");
 					if(szachownica[i][j].getPionek()=='s')
-						pole_szachownicy = new ImageIcon("src/s-b.png");
+						pole_szachownicy = new ImageIcon("png/s-b.png");
 					if(szachownica[i][j].getPionek()=='p')
-						pole_szachownicy = new ImageIcon("src/p-b.png");
+						pole_szachownicy = new ImageIcon("png/p-b.png");
 					
 					pole_szachownicy.paintIcon(this, g, i*100, j*100);
 				}
 				else if(szachownica[i][j].getKolor()=='c') {
 					if(szachownica[i][j].getPionek()=='k')
-						pole_szachownicy = new ImageIcon("src/k-c.png");
+						pole_szachownicy = new ImageIcon("png/k-c.png");
 					if(szachownica[i][j].getPionek()=='h')
-						pole_szachownicy = new ImageIcon("src/h-c.png");
+						pole_szachownicy = new ImageIcon("png/h-c.png");
 					if(szachownica[i][j].getPionek()=='w')
-						pole_szachownicy = new ImageIcon("src/w-c.png");
+						pole_szachownicy = new ImageIcon("png/w-c.png");
 					if(szachownica[i][j].getPionek()=='g')
-						pole_szachownicy = new ImageIcon("src/g-c.png");
+						pole_szachownicy = new ImageIcon("png/g-c.png");
 					if(szachownica[i][j].getPionek()=='s')
-						pole_szachownicy = new ImageIcon("src/s-c.png");
+						pole_szachownicy = new ImageIcon("png/s-c.png");
 					if(szachownica[i][j].getPionek()=='p')
-						pole_szachownicy = new ImageIcon("src/p-c.png");
+						pole_szachownicy = new ImageIcon("png/p-c.png");
 					
 					pole_szachownicy.paintIcon(this, g, i*100, j*100);
 				}
@@ -148,8 +153,7 @@ public class Panel extends JPanel implements MouseListener{
 				Klient.tura='c';
 			else if(Klient.tura=='c')
 				Klient.tura='b';	
-			
-
+			setCursor(new Cursor(Cursor.WAIT_CURSOR));
 		}
 	}
 	
@@ -419,6 +423,7 @@ public class Panel extends JPanel implements MouseListener{
 		szachownica[Klient.myszX1][Klient.myszY1].setPionek('n');
 		wygrana();
 		premia();
+		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 	}
 	
 	public void wygrana() {
